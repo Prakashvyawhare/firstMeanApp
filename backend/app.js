@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyparser = require("body-parser")
 
 const app = express();
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended:false}));
 
 // app.use((req, res, next)=>{
 //     console.log('first middleware');
@@ -12,11 +15,19 @@ const app = express();
 // })
 app.use((req, res, next)=>{
     res.setHeader("Access-Control-Allow-Origin","*");
-    res.setHeader("Access-control-Allow-Header","Origin, X-Requisted-with, Context-Type, Accept"
+    res.setHeader("Access-control-Allow-Headers","Origin, X-Requisted-with, Context-Type, Accept"
     );
     res.setHeader("Access-Control-Allow-Methods","GET, POST, PATCH, DELETE, OPTIONS ")
     next();
 });
+app.post("/spi/posts",(req,res,next)=>{
+    const post = res.body;
+    console.log(post);
+    res.status(201).json({
+        message:"post added successfully"
+    });
+
+})
 app.use('/api/posts',(req, res, next)=>{
 const posts =[{
     id:"1256265",
