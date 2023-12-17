@@ -5,13 +5,13 @@ import { AddEditPostComponent } from './add-edit-post/add-edit-post.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'list',
+    redirectTo:'addPost',
     pathMatch:'full'
   },
   {
@@ -35,8 +35,10 @@ const routes: Routes = [
     CommonModule,
     MaterialModule,
     FormsModule,
+    
     // BrowserModule
   ],
-  exports:[RouterModule]
+  exports:[RouterModule],
+  providers: [],
 })
 export class PostsModule { }

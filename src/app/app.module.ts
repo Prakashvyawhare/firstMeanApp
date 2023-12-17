@@ -16,6 +16,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { MaterialModule } from './shared/material/material.module';
 import { FormsModule } from '@angular/forms';
 import { PostsModule } from './posts/posts.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PostsModule } from './posts/posts.module';
     MatListModule,
     MaterialModule,
     FormsModule,
-    PostsModule
+    PostsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
