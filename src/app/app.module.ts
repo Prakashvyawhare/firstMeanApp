@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { AddEditPostComponent } from './posts/add-edit-post/add-edit-post.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
-import { MaterialModule } from './shared/material/material.module';
+import { MaterialModule } from './shared/material-module/material.module';
 import { FormsModule } from '@angular/forms';
 import { PostsModule } from './posts/posts.module';
 import { HttpClientModule } from '@angular/common/http';
