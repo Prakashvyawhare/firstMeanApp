@@ -33,7 +33,7 @@ app.use(express.urlencoded({limit:'50mb',
 app.use((req, res, next)=>{
     res.setHeader("Access-Control-Allow-Origin","*");
     res.setHeader("Access-Control-Allow-Headers","Origin, X-Requisted-with, Content-Type, Accept");
-    res.setHeader("Access-Control-Allow-Methods","GET, POST, PATCH, DELETE, OPTIONS ")
+    res.setHeader("Access-Control-Allow-Methods","GET,PUT, POST, PATCH, DELETE, OPTIONS ")
     next();
 });
 app.post("/api/posts",(req,res,next)=>{
@@ -74,14 +74,29 @@ app.delete('/api/posts/:id',(req,res,next)=>{
     })
 });
 
-app.get('/api/posts',(req,res,next)=>{
-    Post.findOne({_id:req.params.id}).then(result=>{
-        console.log(results);
+app.get('/api/posts/:id',(req,res,next)=>{
+    Post.findOne({_id:req.params.id}).then((result)=>{
+        console.log(result);
+        res.status(200).json({
+            message:"post fetch successfully",
+            posts:result
+        })
     })
-    console.log(req.params,id);
+    console.log(req.params.id);
     // Post.get({_id:req.params.id}).then(result=>{
     //     console.log(result);
     //     res.status(200).json({message:'postfetched'})
     // })
+})
+app.put('/api/posts/:id',(req,res,next)=>{
+    const post = new Post({
+        _id:req.body.id,
+        title:req.body.title,
+        content:req.body.content
+    });
+    Post.updateOne({_id:req.params.id},post).then(result=>{
+        console.log(result);
+        res.status(200).json({message:'post Updated successfully'})
+    })
 })
 module.exports=app;

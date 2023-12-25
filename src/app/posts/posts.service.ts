@@ -27,15 +27,8 @@ postsList: Array<Post>=[];
   }
 
   getPostbyId(postId:any){
-return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts', postId).pipe(map((postData:any)=>{
-  return postData.posts.map((post:any)=>{
-    return{
-      title:post.title,
-      content: post.content,
-      id:post._id
-    }
-  });
- }));
+return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts/'+postId)
+ 
   }
 
  addPost(post:Post){
@@ -49,7 +42,13 @@ return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts
   // const postdata={_id:post.id,title:post.title,content:post.content}
 this.http.delete('http://localhost:3000/api/posts/'+ postId).subscribe(()=>{
   console.log('deleted');
-  
 })
+ }
+ editPost(post:any,postId:string){
+  let postData={id:postId,title:post.title,content:post.content}
+  this.http.put('http://localhost:3000/api/posts/'+ postId,postData).subscribe((res)=>{
+    console.log(res);
+    
+  })
  }
 }

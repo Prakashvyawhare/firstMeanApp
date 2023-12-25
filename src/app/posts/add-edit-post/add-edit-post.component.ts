@@ -10,7 +10,8 @@ import { Form, NgForm } from '@angular/forms';
 })
 export class AddEditPostComponent implements OnInit {
 postId:any='new';
-postForm!:NgForm
+  // postForm!: NgForm;
+  post: any;
   constructor(private router:Router,private postsService: PostsService,
     private rout:ActivatedRoute) { }
   ngOnInit(): void {
@@ -22,15 +23,31 @@ this.getPost(this.postId);
   }
   getPost(postId:string){
     this.postsService.getPostbyId(postId).subscribe((res:any)=>{
-   this.postForm=res.posts
+   this.post=res.posts
 
-  console.log(res);
+  console.log(res,this.post);
   
     });
   }
-  onAddPost(post:any){
+  onAddPost(post:NgForm){
     this.postsService.addPost(post.control.value)
 this.router.navigate(['Posts/list']);
 
+  }
+  onEditPost(post:NgForm,postId:string){
+    
+    this.postsService.editPost(post.control.value,postId)
+    this.router.navigate(['Posts/list']);
+  }
+
+  onSubmit(post:NgForm){
+    if(post.invalid){
+      return;
+    }
+    if(this.postId!=='new'){
+this.onEditPost(post,this.postId)
+    }else{
+      this.onAddPost(post)
+    }
   }
 }
