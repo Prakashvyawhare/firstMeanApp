@@ -27,7 +27,7 @@ postsList: Array<Post>=[];
   }
 
   getPostbyId(postId:any){
-return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts/'+postId)
+return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts/'+postId);
  
   }
 
@@ -40,9 +40,11 @@ return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts
 
  deletePost(postId:any){
   // const postdata={_id:post.id,title:post.title,content:post.content}
-this.http.delete('http://localhost:3000/api/posts/'+ postId).subscribe(()=>{
-  console.log('deleted');
-})
+return this.http.delete('http://localhost:3000/api/posts/'+ postId)
+// .subscribe(()=>{
+//   console.log('deleted');
+
+// })
  }
  editPost(post:any,postId:string){
   let postData={id:postId,title:post.title,content:post.content}

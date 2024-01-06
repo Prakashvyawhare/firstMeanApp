@@ -8,7 +8,15 @@ import { matFormFieldAnimations } from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatExpansionModule} from '@angular/material/expansion';
-const   materialModuls=[MatInputModule,MatButtonModule,MatIconModule,MatCardModule,MatFormFieldModule,MatExpansionModule]
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+const   materialModuls=[MatInputModule,
+  MatButtonModule,
+  MatIconModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatExpansionModule,
+  MatProgressSpinnerModule
+]
 
 @NgModule({
   declarations: [],

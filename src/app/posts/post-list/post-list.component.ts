@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from '../../shared/models/post.model';
 import { PostsService } from '../posts.service';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
@@ -9,7 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./post-list.component.scss']
 })
 export class PostListComponent implements OnInit {
-  posts: Array<Post> = []
+  posts: Array<Post> = [];
+  isShowLoader: boolean = false;
   constructor(
     private postsService: PostsService,
     private router: Router) { }
@@ -18,20 +20,27 @@ export class PostListComponent implements OnInit {
     this.getPostData();
   }
   getPostData() {
-    this.postsService.getPosts().subscribe((res: any) => {
-      console.log(res);
-      return this.posts = res;
-    })
+    this.isShowLoader = true;
+    this.postsService.getPosts().subscribe({
+      next: (res: any) => {
+        console.log(res);
+        return this.posts = res;
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.isShowLoader = false;
+      }
+    });
   }
   onDeletePost(postId: any) {
     console.log(postId);
-
-    this.postsService.deletePost(postId);
-    this.getPostData();
-
+    lastValueFrom(this.postsService.deletePost(postId)).then(() => {
+      this.getPostData();
+    });
   }
   onEditPost(postId: any) {
-    this.router.navigate(['edit/' + postId])
-
+    this.router.navigate(['edit/' + postId]);
   }
 }

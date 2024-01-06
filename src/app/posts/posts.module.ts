@@ -7,6 +7,7 @@ import { MaterialModule } from '../shared/material-module/material.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -37,9 +38,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes), 
     CommonModule,
-    MaterialModule,
     FormsModule,
-    
+    SharedModule
     // BrowserModule
   ],
   exports:[RouterModule],

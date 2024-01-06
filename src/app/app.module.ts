@@ -17,6 +17,7 @@ import { MaterialModule } from './shared/material-module/material.module';
 import { FormsModule } from '@angular/forms';
 import { PostsModule } from './posts/posts.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,6 @@ import { HttpClientModule } from '@angular/common/http';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MaterialModule,
     FormsModule,
     PostsModule,
     HttpClientModule
