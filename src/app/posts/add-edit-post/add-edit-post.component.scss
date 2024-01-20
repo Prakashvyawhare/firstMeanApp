@@ -6,3 +6,22 @@ textarea {
   margin: auto;
   width: 50%;
 }
+input[type=file]{
+  visibility: hidden;
+}
+.image-preview{
+    height: 5rem;
+    margin: 10px 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: flex-start;
+img{
+  height: 100%;
+  width: 80%;
+}
+}
+.file-btn{
+  margin: 10px;
+}

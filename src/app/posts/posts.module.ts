@@ -4,7 +4,7 @@ import { PostsComponent } from './posts.component';
 import { AddEditPostComponent } from './add-edit-post/add-edit-post.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { MaterialModule } from '../shared/material-module/material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
@@ -39,7 +39,8 @@ const routes: Routes = [
     RouterModule.forChild(routes), 
     CommonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
     // BrowserModule
   ],
   exports:[RouterModule],

@@ -1,29 +1,35 @@
 <app-loader class="loader" *ngIf="isShowLoader"></app-loader>
 <div class="col mt-3 container " *ngIf="!isShowLoader"><mat-card>
-    <form (submit)="onSubmit(postForm)" #postForm="ngForm">
+    <form [formGroup]="post" (submit)="onSubmit()" >
       <mat-form-field>
         <input
           matInput
           type="text"
-          name="title"
-          [ngModel]="post?.title"
-          required
-          minlength="3"
+          formControlName="title"
           placeholder="Post Title"
-          #title="ngModel">
-        <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
+          >
+        <mat-error *ngIf="this.post.get('title')?.getError('required')">Please enter a post title.</mat-error>
       </mat-form-field>
       <mat-form-field>
         <textarea
           matInput
           rows="4"
-          name="content"
-          [ngModel]="post?.content"
-          required
+          formControlName="content"
           placeholder="Post Content"
-          #content="ngModel"></textarea>
-        <mat-error *ngIf="content.invalid">Please enter a post title.</mat-error>
+          ></textarea>
+        <mat-error *ngIf="this.post.get('content')?.getError('required')">Please enter a post title.</mat-error>
       </mat-form-field>
+      <!-- <mat-form-field> -->
+        <button mat-stroked-button type="button" class="file-btn" (click)="filePicker.click()">Add File</button>
+        <input type="file" #filePicker (change)="onFilePicked($event)">
+        <mat-error *ngIf="this.post.get('image')?.getError('invalidFileType')">Invalid file type. Only images are allowed.</mat-error>
+        <mat-error *ngIf="this.post.get('image')?.getError('fileTooLarge')"> File is too large. Maximum size is 5 MB.</mat-error>
+
+        <div *ngIf="imgPreview" class="image-preview">
+          <button mat-stroked-button type="button" (click)="onClrImg()">clear</button>
+          <img [src]="imgPreview" alt="post.get('image').value.title">
+        </div>
+      <!-- </mat-form-field> -->
       <button
         mat-raised-button
         color="accent"

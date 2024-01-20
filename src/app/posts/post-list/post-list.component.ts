@@ -16,15 +16,15 @@ export class PostListComponent implements OnInit {
     private postsService: PostsService,
     private router: Router) { }
 
-  ngOnInit(): void {
-    this.getPostData();
+ ngOnInit(): void {
+   this.getPostData();
   }
-  getPostData() {
+ getPostData() {
     this.isShowLoader = true;
-    this.postsService.getPosts().subscribe({
-      next: (res: any) => {
+     this.postsService.getPosts().subscribe({
+      next: async (res: any) => {
         console.log(res);
-        return this.posts = res;
+         this.posts = await res;
       },
       error: (error: any) => {
         console.error(error);

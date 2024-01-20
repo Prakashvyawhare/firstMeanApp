@@ -31,9 +31,13 @@ return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts
  
   }
 
- addPost(post:Post){
-  const postdata={id:null,title:post.title,content:post.content}
-   this.http.post('http://localhost:3000/api/posts',postdata).subscribe((res)=>{
+ addPost(post:Post,image:any){
+  // const postdata={id:null,title:post.title,content:post.content}
+  const formaData= new FormData();
+  formaData.append('title',post.title)
+  formaData.append('content',post.content);
+  formaData.append('image',image)
+   this.http.post('http://localhost:3000/api/posts',formaData).subscribe((res)=>{
     console.log(res);
   });
  }
@@ -46,9 +50,14 @@ return this.http.delete('http://localhost:3000/api/posts/'+ postId)
 
 // })
  }
- editPost(post:any,postId:string){
-  let postData={id:postId,title:post.title,content:post.content}
-  this.http.put('http://localhost:3000/api/posts/'+ postId,postData).subscribe((res)=>{
+ editPost(post:any,postId:string,image:any){
+  const formaData= new FormData();
+  formaData.append('title',post.title)
+  formaData.append('content',post.content);
+  formaData.append('image',image);
+  formaData.append('id',postId)
+  // let postData={id:postId,title:post.title,content:post.content}
+  this.http.put('http://localhost:3000/api/posts/'+ postId,formaData).subscribe((res)=>{
     console.log(res);
     
   })
