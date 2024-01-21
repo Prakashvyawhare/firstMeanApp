@@ -3,6 +3,8 @@ import { Post } from '../../shared/models/post.model';
 import { PostsService } from '../posts.service';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-post-list',
@@ -12,12 +14,19 @@ import { lastValueFrom } from 'rxjs';
 export class PostListComponent implements OnInit {
   posts: Array<Post> = [];
   isShowLoader: boolean = false;
+  pageSizeOptions=environment.pageSizeOptions;
+  totalPosts=10;
+  pageSize=environment.pageSize;
   constructor(
     private postsService: PostsService,
     private router: Router) { }
 
  ngOnInit(): void {
    this.getPostData();
+  }
+  onChangePage(pageData:PageEvent){
+console.log(pageData);
+
   }
  getPostData() {
     this.isShowLoader = true;

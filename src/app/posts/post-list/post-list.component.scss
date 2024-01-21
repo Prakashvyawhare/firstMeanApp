@@ -2,6 +2,10 @@
     display: block;
     margin-top: 1rem;
   }
+  .list-card{
+width: 80%;
+margin: auto;
+  }
   
   .info-text {
     text-align: center;
@@ -10,3 +14,12 @@
     height: 100%;
     margin-top: 100px
   }
+  .post-image {
+    width: 100%;
+  }
+  
+  .post-image img {
+    width: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  }
+  

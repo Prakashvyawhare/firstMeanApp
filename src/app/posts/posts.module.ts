@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { PostsComponent } from './posts.component';
 import { AddEditPostComponent } from './add-edit-post/add-edit-post.component';
 import { PostListComponent } from './post-list/post-list.component';
-import { MaterialModule } from '../shared/material-module/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { PostsService } from './posts.service';
 
 const routes: Routes = [
   {
@@ -40,10 +40,12 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     // BrowserModule
   ],
   exports:[RouterModule],
-  providers: [],
+  providers: [
+    PostsService
+  ],
 })
 export class PostsModule { }

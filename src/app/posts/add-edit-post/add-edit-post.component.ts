@@ -15,7 +15,7 @@ export class AddEditPostComponent implements OnInit {
   post=new FormGroup({
     title: new FormControl ("",{validators:[Validators.required]}),
 content: new FormControl("",{validators:[Validators.required]}),
-image:new FormControl(null,{validators:[Validators.required,imageValidator]})
+image:new FormControl(null,{validators:[Validators.required]})
 })
   imgPreview:any;
   // postForm!: NgForm;
@@ -33,9 +33,17 @@ image:new FormControl(null,{validators:[Validators.required,imageValidator]})
   getPost(postId: string) {
     this.isShowLoader=true;
     this.postsService.getPostbyId(postId).subscribe({
-      next: (res: any) => {
-        this.post = res.posts
-        console.log(res, this.post);
+      next : (res:any) => {
+        // this.post.controls['title'].patchValue(res.title)
+        // this.post.controls['content'].patchValue(res.content)
+        // this.post.controls['image'].patchValue(res.imagePath)
+this.post.patchValue({
+  title:res.title,
+  content:res.content,
+  image:res.imagePath
+})
+        this.imgPreview=res.imagePath
+        // console.log(res, this.post);
       },
       error: (error: any) => { console.error(error); },
       complete: () => { this.isShowLoader = false; }
@@ -51,8 +59,8 @@ image:new FormControl(null,{validators:[Validators.required,imageValidator]})
     this.router.navigate(['Posts/list']);
   }
   onFilePicked(file:any){
-    let fileObj=file.target.files[0];
-    this.post.patchValue({image:fileObj});
+    const fileObj =file.target.files[0];
+    this.post.controls['image'].setValue(fileObj);
     this.post.get('image')?.updateValueAndValidity();
     const reader = new FileReader();
     reader.onload=()=>{
@@ -64,9 +72,9 @@ image:new FormControl(null,{validators:[Validators.required,imageValidator]})
 
   }
   onClrImg(){
-    this.post.setValue({Image:null});
+    this.post.get('image')?.setValue(null);
     this.post.get('image')?.updateValueAndValidity();
-    this.imgPreview=''
+    this.imgPreview=null
   }
   onSubmit() {
     if (this.post.invalid) {

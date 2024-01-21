@@ -8,6 +8,7 @@ import { matFormFieldAnimations } from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 const   materialModuls=[MatInputModule,
   MatButtonModule,
@@ -15,7 +16,8 @@ const   materialModuls=[MatInputModule,
   MatCardModule,
   MatFormFieldModule,
   MatExpansionModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatPaginatorModule
 ]
 
 @NgModule({

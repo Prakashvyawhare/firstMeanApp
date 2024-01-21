@@ -8,7 +8,7 @@
           formControlName="title"
           placeholder="Post Title"
           >
-        <mat-error *ngIf="this.post.get('title')?.getError('required')">Please enter a post title.</mat-error>
+        <mat-error *ngIf="post.get('title')?.getError('required')">Please enter a post title.</mat-error>
       </mat-form-field>
       <mat-form-field>
         <textarea
@@ -17,13 +17,13 @@
           formControlName="content"
           placeholder="Post Content"
           ></textarea>
-        <mat-error *ngIf="this.post.get('content')?.getError('required')">Please enter a post title.</mat-error>
+        <mat-error *ngIf="post.get('content')?.getError('required')">Please enter a post title.</mat-error>
       </mat-form-field>
       <!-- <mat-form-field> -->
         <button mat-stroked-button type="button" class="file-btn" (click)="filePicker.click()">Add File</button>
         <input type="file" #filePicker (change)="onFilePicked($event)">
-        <mat-error *ngIf="this.post.get('image')?.getError('invalidFileType')">Invalid file type. Only images are allowed.</mat-error>
-        <mat-error *ngIf="this.post.get('image')?.getError('fileTooLarge')"> File is too large. Maximum size is 5 MB.</mat-error>
+        <mat-error *ngIf="post.get('image')?.getError('invalidMimeType')">Invalid file type. Only images are allowed.</mat-error>
+        <!-- <mat-error *ngIf="post.get('image')?.getError('fileTooLarge')"> File is too large. Maximum size is 5 MB.</mat-error> -->
 
         <div *ngIf="imgPreview" class="image-preview">
           <button mat-stroked-button type="button" (click)="onClrImg()">clear</button>

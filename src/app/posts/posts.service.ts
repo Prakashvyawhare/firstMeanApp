@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Post } from '../shared/models/post.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { ObjectId } from 'mongodb';
+import { Post } from '../shared/models/post.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PostsService {
-postsList: Array<Post>=[];
+postsList: Array<any>=[];
   constructor(public http:HttpClient) { }
 /**
  * get list of posts from database thorough http request
@@ -16,22 +14,23 @@ postsList: Array<Post>=[];
  */
   getPosts(){
    return  this.http.get<{message:string; posts:any}>('http://localhost:3000/api/posts').pipe(map((postData)=>{
-    return postData.posts.map((post:any)=>{
+    return postData.posts.map((post:Post)=>{
       return{
         title:post.title,
         content: post.content,
-        id:post._id
+        _id:post._id,
+        imagePath:post.imagePath
       }
     });
    }));
   }
 
   getPostbyId(postId:any){
-return this.http.get<{message:string;post:any}>('http://localhost:3000/api/posts/'+postId);
+return this.http.get<{message:string;post:Post}>('http://localhost:3000/api/posts/'+postId);
  
   }
 
- addPost(post:Post,image:any){
+ addPost(post:any,image:any){
   // const postdata={id:null,title:post.title,content:post.content}
   const formaData= new FormData();
   formaData.append('title',post.title)
@@ -50,7 +49,19 @@ return this.http.delete('http://localhost:3000/api/posts/'+ postId)
 
 // })
  }
- editPost(post:any,postId:string,image:any){
+ editPost(post:Post,postId:string,image:any){
+  if(image === typeof 'string'){
+    let postData = {
+      title:post.title,
+content: post.content,
+id:postId,
+imagePath:post.imagePath
+    }
+    this.http.put('http://localhost:3000/api/posts/'+ postId,postData).subscribe((res)=>{
+      console.log(res);
+      
+    })   
+  }else{
   const formaData= new FormData();
   formaData.append('title',post.title)
   formaData.append('content',post.content);
@@ -60,6 +71,6 @@ return this.http.delete('http://localhost:3000/api/posts/'+ postId)
   this.http.put('http://localhost:3000/api/posts/'+ postId,formaData).subscribe((res)=>{
     console.log(res);
     
-  })
+  })}
  }
 }

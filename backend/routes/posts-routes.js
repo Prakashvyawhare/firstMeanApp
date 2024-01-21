@@ -27,15 +27,24 @@ const storage = multer.diskStorage({
 
 
 router.post("",multer({storage:storage}).single("image"), (req, res, next) => {
+    const url = req.protocol +'://' + req.get('host');
     const post = new Post({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath: url +"/images/"+ req.file.filename
     });
-    post.save();
-    console.log(post);
-    res.status(201).json({
-        message: "post added successfully"
+    post.save().then(createdPost=>{
+        res.status(201).json({
+            message: "post added successfully",
+            post:{
+                ...createdPost,
+                _id:createdPost._id
+            }
+        });
+
     });
+    // console.log(post);
+    
 
 })
 router.get('', (req, res, next) => {
@@ -57,18 +66,21 @@ router.delete('/:id', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     Post.findOne({ _id: req.params.id }).then((result) => {
         console.log(result);
-        res.status(200).json({
-            message: "post fetch successfully",
-            posts: result
-        })
+        res.status(200).json(result)
     })
     console.log(req.params.id);
 })
-router.put('/:id', (req, res, next) => {
+router.put('/:id',multer({ storage: storage }).single("image"), (req, res, next) => {
+    let imagePath = req.body.image;
+    if (req.file) {
+        const url = req.protocol + "://" + req.get("host");
+        imagePath = url + "/images/" + req.file.filename
+      }
     const post = new Post({
         _id: req.body.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath: imagePath
     });
     Post.updateOne({ _id: req.params.id }, post).then(result => {
         console.log(result);
