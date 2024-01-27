@@ -17,23 +17,36 @@ export class PostListComponent implements OnInit {
   pageSizeOptions=environment.pageSizeOptions;
   totalPosts=10;
   pageSize=environment.pageSize;
+  quiryParam={
+    pageSize:this.pageSize,
+    pageIndex:1
+   }
+  pageIndex: number=0;
   constructor(
     private postsService: PostsService,
     private router: Router) { }
 
  ngOnInit(): void {
-   this.getPostData();
+   this.getPostData(this.quiryParam);
   }
   onChangePage(pageData:PageEvent){
+    this.pageSize=pageData.pageSize;
+    this.pageIndex=pageData.pageIndex
+  this.quiryParam={
+    pageSize:pageData.pageSize,
+    pageIndex:pageData.pageIndex+1
+   }
+   this.getPostData(this.quiryParam);
 console.log(pageData);
 
   }
- getPostData() {
+ getPostData(quiryParam?:any) {
     this.isShowLoader = true;
-     this.postsService.getPosts().subscribe({
-      next: async (res: any) => {
+     this.postsService.getPosts(quiryParam).subscribe({
+      next:(res: any) => {
         console.log(res);
-         this.posts = await res;
+         this.posts = res.posts;
+         this.totalPosts=res.totalPost
       },
       error: (error: any) => {
         console.error(error);
@@ -46,7 +59,7 @@ console.log(pageData);
   onDeletePost(postId: any) {
     console.log(postId);
     lastValueFrom(this.postsService.deletePost(postId)).then(() => {
-      this.getPostData();
+      this.getPostData(this.quiryParam);
     });
   }
   onEditPost(postId: any) {

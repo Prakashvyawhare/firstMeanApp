@@ -7,21 +7,24 @@ import { Post } from '../shared/models/post.model';
 @Injectable()
 export class PostsService {
 postsList: Array<any>=[];
+url='http://localhost:3000/api/posts'
   constructor(public http:HttpClient) { }
 /**
  * get list of posts from database thorough http request
  * @returns postsList
  */
-  getPosts(){
-   return  this.http.get<{message:string; posts:any}>('http://localhost:3000/api/posts').pipe(map((postData)=>{
-    return postData.posts.map((post:Post)=>{
+  getPosts(quiryParam?:any){
+    let url='http://localhost:3000/api/posts'
+   return  this.http.get<{message:string; posts:any,totalCount:number}>(`${url}?pageSize=${quiryParam.pageSize}&pageIndex=${quiryParam.pageIndex}`).pipe(map((postData)=>{
+    return {totalPost:postData.totalCount,
+     posts:postData.posts.map((post:Post)=>{
       return{
         title:post.title,
         content: post.content,
         _id:post._id,
         imagePath:post.imagePath
       }
-    });
+    })};
    }));
   }
 

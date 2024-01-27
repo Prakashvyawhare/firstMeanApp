@@ -48,12 +48,32 @@ router.post("",multer({storage:storage}).single("image"), (req, res, next) => {
 
 })
 router.get('', (req, res, next) => {
-    Post.find().then((document) => {
+    console.log(req.query);
+    let pagesize=+req.query.pageSize;
+    let pageIndex= +req.query.pageIndex
+    const responseData= Post.find()
+    let fetchData;
+    if(pageIndex&&pagesize){
+responseData.skip(pagesize *(pageIndex-1)).limit(pagesize);
+    }
+    responseData
+    .then(document=> {
+        fetchData=document;
+        return Post.countDocuments();
+    })
+    .then(count=>{
         res.status(200).json({
             message: "post fetch successfully",
-            posts: document
+            posts: fetchData,
+            totalCount:count
         })
     })
+    .catch(error => {
+        res.status(500).json({
+            message: "Error fetching posts",
+            error: error.message,
+        });
+    });
 })
 router.delete('/:id', (req, res, next) => {
     console.log(req.params.id);
