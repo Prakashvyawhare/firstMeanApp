@@ -1,1 +1,45 @@
-<p>signup works!</p>
+<app-loader class="loader" *ngIf="isShowLoader"></app-loader>
+<div class="col container " *ngIf="!isShowLoader"><mat-card>
+    <!-- <mat-card> -->
+      <h2>Sign Up</h2>
+    <form [formGroup]="signupForm">
+      <mat-form-field>
+        <input
+          matInput
+          type="email"
+          formControlName="userName"
+          placeholder="Enter your UserName"
+          >
+        <mat-error *ngIf="signupForm.get('userName')?.getError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="Enter Your Password"
+          >
+        <mat-error  *ngIf="signupForm.get('password')?.getError('required')" >Please enter password.</mat-error>
+        <mat-error *ngIf="signupForm.get('password')?.hasError('pattern')">Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Confirm Your Password"
+          >
+        <mat-error  *ngIf="signupForm.get('confirmPassword')?.getError('required')" >Please enter password.</mat-error>
+        <!-- <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('pattern')">Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.</mat-error> -->
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="accent"
+      (click)="onSubmit()"  type="submit">Signup</button>
+
+    </form>
+    <span>already have a account?<a routerLink="/Auth/login">Login</a></span>
+    
+  </mat-card>
+<!-- </mat-card> -->
+</div>

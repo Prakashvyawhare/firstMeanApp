@@ -1,15 +1,16 @@
 <app-loader class="loader" *ngIf="isShowLoader"></app-loader>
-<div class="col mt-5 container " *ngIf="!isShowLoader"><mat-card>
+<div class="col container " *ngIf="!isShowLoader"><mat-card>
     <!-- <mat-card> -->
+      <h2>Login</h2>
     <form [formGroup]="loginForm" (submit)="onSubmit()" >
       <mat-form-field>
         <input
           matInput
           type="email"
           formControlName="userName"
-          placeholder="Post Title"
+          placeholder="Enter your UserName"
           >
-        <mat-error *ngIf="loginForm.get('userName')?.getError('required')">Please enter a post title.</mat-error>
+        <mat-error *ngIf="loginForm.get('userName')?.getError('required')">Enter a valid email</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -19,13 +20,14 @@
           placeholder="Enter Your Password"
           >
         <mat-error  *ngIf="loginForm.get('password')?.getError('required')" >Please enter password.</mat-error>
-        <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')">Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.</mat-error>
+        <!-- <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')">Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.</mat-error> -->
       </mat-form-field>
       <button
         mat-raised-button
         color="accent"
-        type="submit">Save Post</button>
+        type="submit">Login</button>
     </form>
+    <span>Don't have an account?<a routerLink="/Auth/signup">Signup</a></span>
   </mat-card>
 <!-- </mat-card> -->
 </div>
