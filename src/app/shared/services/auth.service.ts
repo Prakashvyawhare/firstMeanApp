@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -7,10 +8,13 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private token : string=''
   url = 'http://localhost:3000/api/auth';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router:Router) {}
 
   getValue(key:string){
-    return this.token;
+    return localStorage.getItem(key);
+  }
+  setValue(key:string,value:string){
+    localStorage.setItem(key,value);
   }
 
   signup(userName: string, password: string) {
@@ -23,7 +27,14 @@ export class AuthService {
   login(userName: string, password: string) {
     let userDeatails = { userName: userName, password: password };
     this.http.post<{token:string}>(`${this.url}/login`, userDeatails).subscribe((res:any) => {
-      this.token=res.token
+      this.token=res.token;
+      this.setValue('token',this.token)
+      this.router.navigate(['/Posts']);
     });
+  }
+
+  logOut(){
+    localStorage.clear();
+    this.router.navigate(['/Auth/login'])
   }
 }
